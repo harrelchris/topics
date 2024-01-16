@@ -32,7 +32,7 @@ python topics/manage.py makemigrations
 python topics/manage.py migrate
 
 :: Delete migrations during development
-:: del topics\public\migrations\0001_initial.py
+del topics\content\migrations\0001_initial.py
 
 :: Create super user
 python topics/manage.py createsuperuser --noinput

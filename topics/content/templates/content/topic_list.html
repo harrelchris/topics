@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}Topics{% endblock %}
+
+{% block content %}
+  <h1>Topics</h1>
+  {% for category in categories %}
+    <p>{{ category.name }}</p>
+    <ul>
+    {% for topic in category.topics.all %}
+      <li><a href="{% url 'content:topic_detail' pk=topic.pk %}">{{ topic.name }}</a></li>
+    {% endfor %}
+    </ul>
+  {% endfor %}
+{% endblock %}
