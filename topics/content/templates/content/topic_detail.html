@@ -3,10 +3,21 @@
 {% block title %}{{ topic.name }}{% endblock %}
 
 {% block content %}
-  <h1>{{ topic.name }}</h1>
-  <ul>
-  {% for discussion in topic.discussions.all %}
-    <li><a href="{% url 'content:discussion_detail' pk=discussion.pk %}">{{ discussion.title }}</a></li>
-  {% endfor %}
-  </ul>
+  <div class="card my-3">
+    <div class="card-header">
+      <h5 class="card-title">{{ topic.name }}</h5>
+      <p class="card-text">{{ topic.description }}</p>
+    </div>
+
+    <div class="list-group">
+    {% for discussion in topic.discussions.all %}
+      <a href="{% url 'content:discussion_detail' pk=discussion.pk %}" class="list-group-item list-group-item-action border border-0 {% if forloop.first %}{% else %}border-top{% endif %}" aria-current="true">
+        <div class="d-flex w-100 justify-content-between">
+          <h5 class="mb-1">{{ discussion.title }}</h5>
+        </div>
+        <p class="mb-1">{{ discussion.text|truncatechars:100 }}</p>
+      </a>
+    {% endfor %}
+    </div>
+  </div>
 {% endblock %}
