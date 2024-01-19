@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}{{ user.username }}{% endblock %}
+
+{% block content %}
+  <div class="card my-3">
+    <div class="card-header">
+      <h5 class="card-title">/u/{{ user.username }}</h5>
+    </div>
+    <div class="card-body">
+      <p class="card-text">Joined on {{ user.date_joined }}</p>
+    </div>
+  </div>
+
+  <!-- Discussions -->
+  <div class="card my-3">
+    <div class="card-header">
+      <h5 class="card-title">Recent Discussions</h5>
+    </div>
+
+    <div class="list-group">
+    {% for discussion in discussions %}
+      <div class="list-group-item list-group-item-action border border-0 {% if forloop.first %}{% else %}border-top{% endif %}">
+        <h5><a href="{% url 'content:discussion_detail' pk=discussion.pk %}" class="text-decoration-none text-dark">{{ discussion.title }}</a></h5>
+        <p class="mb-1"><small>on {{ discussion.created_at }}</small></p>
+        <p class="mb-0">{{ discussion.text|truncatechars:100 }}</p>
+      </div>
+    {% empty %}
+      <div class="list-group-item list-group-item-action border border-0">
+        <h5>/u/{{ user.username }} has not created any discussions.</h5>
+      </div>
+    {% endfor %}
+    </div>
+    <div class="card-footer">
+      <p><a href="{% url 'content:user_discussions' pk=user.pk %}">All discussions</a></p>
+    </div>
+  </div>
+
+  <!-- Comments -->
+  <div class="card my-3">
+    <div class="card-header">
+      <h5 class="card-title">Recent Comments</h5>
+    </div>
+
+    <div class="list-group">
+    {% for comment in comments %}
+      <div class="list-group-item list-group-item-action border border-0 {% if forloop.first %}{% else %}border-top{% endif %}">
+        <p class="mb-2"><small>re: <a href="{% url 'content:discussion_detail' pk=comment.discussion.pk %}">{{ comment.discussion.title }}</a> on {{ comment.created_at }}</small></p>
+        <p class="mt-1">{{ comment.text }}</p>
+      </div>
+    {% empty %}
+      <div class="list-group-item list-group-item-action border border-0">
+        <h5>/u/{{ user.username }} has not left any comments.</h5>
+      </div>
+    {% endfor %}
+    </div>
+    <div class="card-footer">
+      <p><a href="{% url 'content:user_comments' pk=user.pk %}">All comments</a></p>
+    </div>
+  </div>
+{% endblock %}
