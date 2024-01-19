@@ -13,7 +13,7 @@
     <div class="list-group">
     {% for comment in page_obj %}
       <div class="list-group-item list-group-item-action border border-0 {% if forloop.first %}{% else %}border-top{% endif %}">
-        <p class="mb-2"><small>re: <a href="{% url 'content:discussion_detail' pk=comment.discussion.pk %}">{{ comment.discussion.title }}</a> on {{ comment.created_at }}</small></p>
+        <p class="mb-2"><small>by <a href="{% url 'content:user_detail' pk=comment.author.pk %}">{{ comment.author.username }}</a> on {{ comment.created_at }}</small></p>
         <p class="mt-1">{{ comment.text }}</p>
       </div>
     {% empty %}
